@@ -1,5 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Syne:wght@400;700&display=swap');
+
+/* NOTE: Lust and Paris Pro are premium fonts. To use them, add local @font-face declarations
+   or include a hosted link to their files. Below we include them in the font-stack as fallbacks.
+*/
+
+:root{
+  --brand-pink: #FF5864;
+  --brand-blue: #3B82F6; /* tailwind blue-500 */
+  --brand-pink-600: #ff3b52;
+  --bg: #f8fafc;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 html, body, #root { height: 100%; }
+
+body{
+  font-family: 'Lust', 'Paris Pro', 'Montserrat', 'Syne', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--bg);
+}
+
+.brand-pink { color: var(--brand-pink); }
+.bg-brand-pink { background-color: var(--brand-pink); }
+.bg-brand-blue { background-color: var(--brand-blue); }
+.btn-brand-pink { background-color: var(--brand-pink); color: white; }
+.btn-brand-blue { background-color: var(--brand-blue); color: white; }
+
+.card { background: white; border-radius: 0.5rem; box-shadow: 0 6px 20px rgba(16,24,40,0.06); }
