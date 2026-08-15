@@ -1,9 +1,17 @@
-# Frontend
+# Frontend (React + Vite)
 
-This directory will contain the React + TypeScript frontend (user app + admin dashboard).
+This folder contains a minimal frontend scaffold using Vite + React + TypeScript.
 
-Suggested libraries: React, TypeScript, Tailwind CSS, react-router, react-tinder-card, Socket.IO client.
+Quick start (from repo root)
+1. cd frontend
+2. npm install
+3. npm run dev
 
-Plan
-- User-facing app: onboarding, profile editor, discovery swipe, chat
-- Admin dashboard: users, moderation, analytics
+Routes
+- / -> Discovery (Tinder-like swipe demo)
+- /profile -> Profile page
+- /admin -> Admin dashboard overview
+
+Notes
+- This is a UI-only scaffold. Connect to the backend APIs for real data.
+- Tailwind CSS is configured; run the dev server to see styles.
