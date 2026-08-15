@@ -1,14 +1,25 @@
-name: CI — Frontend
+mkdir -p .github/workflows
+
+cat > .github/workflows/deploy-frontend-gh-pages.yml <<'YAML'
+name: Deploy Frontend to GitHub Pages (main)
 
 on:
   push:
-    branches: [ main, feature/frontend-admin ]
-  pull_request:
-    branches: [ main, feature/frontend-admin ]
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  build-frontend:
+  build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,27 +29,28 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Cache node modules
-        uses: actions/cache@v4
-        with:
-          path: frontend/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('frontend/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install dependencies (frontend)
-        working-directory: frontend
-        run: npm ci
-
-      - name: Build (frontend)
-        working-directory: frontend
-        run: npm run build
-
-      - name: Run tests (if any)
-        working-directory: frontend
+      - name: Install dependencies
         run: |
-          if [ -f frontend/package.json ]; then
-            if npm run | grep -q test; then
-              npm test || true
-            fi
-          fi
+          cd frontend
+          npm ci
+
+      - name: Build
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Upload artifact for GitHub Pages
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: frontend/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
+YAML
